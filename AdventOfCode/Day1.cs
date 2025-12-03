@@ -5,8 +5,9 @@ namespace AdventOfCode
 {
     public class Day1
     {
-        public int password = 50;
-        public int timesToZero = 0;
+        int password = 50;
+        int timesToZero = 0;
+        int timesAroundZero = 0;
 
 
 
@@ -14,25 +15,24 @@ namespace AdventOfCode
         {
             if (direction == 'l' || direction == 'L')
             {
-                if (password - amount < 0)
+                password -= amount;
+                while (password < 0)
                 {
-                    password = 100 + password - amount;
+                    password += 100;
+                    //timesAroundZero++;
                 }
-                else
-                {
-                    password -= amount;
-                }
+
+
             }
             else if (direction == 'r' || direction == 'R')
             {
-                if (this.password + amount > 99)
+                password += amount;
+                while (password > 99)
                 {
-                    password = password + amount - 100;
+                    password -= 100;
+                    //timesAroundZero++;
                 }
-                else
-                {
-                    password += amount;
-                }
+
             }
             else
             {
@@ -40,7 +40,8 @@ namespace AdventOfCode
             }
             if (password == 0)
             {
-                timesToZero += 1;
+                timesToZero++;
+                //timesAroundZero++;
             }
 
             Console.WriteLine(password);
@@ -64,8 +65,10 @@ namespace AdventOfCode
 
                 this.rotate(direction, Convert.ToInt32(amount));
             }
-            Console.WriteLine($"The codes inputed makes the password: {timesToZero} zeros");
-        }
+            Console.WriteLine($"The codes inputed makes the password: {timesToZero} times hit zero perfectly\n"
+                //+ $"                                     and {timesAroundZero} times spun around zero"
+                );
+        } 
 
 
         public void inputCodes(List<string> input)
